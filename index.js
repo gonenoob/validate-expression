@@ -1,7 +1,7 @@
 /**
  * 校验自定义规则表达式的合法性
  * @param {string} condition 表达式内容，如 1|2||3
- * @param {int} max 含有的最大数字
+ * @param {array} idxs 可以含有的数字
  * @return {Boolean} 表达式是否合法
  */
 
@@ -10,7 +10,7 @@ const prevReg = /^[\!\(\s]*\d+$/
 //匹配形似 1或者(1)后有 (!符号的
 const nextReg = /^[\!\s]*\d+[\s\)]*$/
 
-function validateExpression(condition='', max) {
+function validateExpression(condition='', idxs=[]) {
 	//形如(1&2)|(3|4) 或(1&2|)3 或(1&2或  1&2） 
 	let ret = true
 	let formatter = /^[\!\(\)\|\s&0-9]+$/
@@ -51,13 +51,13 @@ function validateExpression(condition='', max) {
 		let item = removeBrackets(i)
 
 		if (/\d+/.test(item)) {
-			if (!isValidateNumElement(item, max)) {
+			if (!isValidateNumElement(item, idxs)) {
 				ret = false
 			}
 		} else {
 			let prevItem = removeBrackets(eles[index - 1])
 			let nextItem = removeBrackets(eles[index + 1])
-			if (!isValidateNumElement(prevItem, max) || !isValidateNumElement(nextItem, max)) {
+			if (!isValidateNumElement(prevItem, idxs) || !isValidateNumElement(nextItem, idxs)) {
 				ret = false
 			}
 		}
@@ -78,13 +78,13 @@ function validateExpression(condition='', max) {
 	return ret
 }
 
-function isValidateNumElement(ele, max) {
+function isValidateNumElement(ele, idxs) {
 	let ret = true
 
 	if (prevReg.test(ele) || nextReg.test(ele)) {
 		let num = ele.match(/\d+/)[0]
-
-		if (num > max) {
+		let index = idxs.findIndex(r => r == num)
+		if (idxs.length && index < 0) {
 			ret = false
 		}
 	} else {

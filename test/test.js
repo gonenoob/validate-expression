@@ -110,12 +110,12 @@ test('"(!(!(!1)&2)|3" should be false', () => {
   expect(v).toBe(false)
 })
 
-test('"!(!(!1)&2)|3|4" and max4 should be true', () => {
-  let v = VE('!(!(!1)&2)|3|4', 4)
+test('"!(!(!1)&2)|3|4" and [1,2,3,4] should be true', () => {
+  let v = VE('!(!(!1)&2)|3|4', [1,2,3,4])
   expect(v).toBe(true)
 })
 
-test('"!(!(!1)&2)|3|4" and max4 should be false', () => {
-  let v = VE('!(!(!1)&2)|3|4', 2)
+test('"!(!(!1)&2)|3|4" and [1,2,4] should be false', () => {
+  let v = VE('!(!(!1)&2)|3|4', [1,2,4])
   expect(v).toBe(false)
 })
