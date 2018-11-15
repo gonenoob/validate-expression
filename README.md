@@ -18,7 +18,7 @@ const { validateExpression } = require('validate-expression')
 ```js
 const { validateExpression } = require('validate-expression')
 let expression1 = '1&&2&3|4||5 & !(6|7)'
-let expression1 = '1&&2&3|4||5! & !(6|7)'
+let expression2 = '1&&2&3|4||5! & !(6|7)'
 let ret1 = validateExpression(expression1) //true
 let ret2 = validateExpression(expression1, [1,2,3,4,5,6,7]) //true
 let ret3 = validateExpression(expression1, [1,2,3,4,7]) //false
